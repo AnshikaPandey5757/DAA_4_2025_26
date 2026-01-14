@@ -1,0 +1,77 @@
+/* 
+recurrence relation =3T(n/2)+nlogn
+a=3 ,b=2, k=1, p=1
+case I:
+a>b^k
+the asymptotic time complexity for this recurrence relation is =n^log3base 2
+*/
+#include <bits/stdc++.h>
+using namespace std;
+
+using namespace std::chrono;
+auto start = high_resolution_clock::now();
+long long ops=0;
+void complexRec(int n) {
+    ops++;
+   if (n <= 2) {
+       return;
+   }
+   int p = n;
+   ops++;
+   while (p > 0) {
+    ops++;
+       vector<int> temp(n);
+       ops+=n;
+       for (int i = 0; i < n; i++) {
+        ops++;
+           temp[i] = i ^ p;
+           ops++;
+       }
+       p >>= 1;
+       ops++;
+   }
+
+
+   vector<int> small(n);
+   ops+=n;
+   for (int i = 0; i < n; i++) {
+    ops++;
+       small[i] = i * i;
+       ops++;
+   }
+
+ops += 2;                
+if (n % 3 == 0) {
+    reverse(small.begin(), small.end());
+} else {
+    reverse(small.begin(), small.end());
+}
+ops += n;
+   complexRec(n / 2);
+   complexRec(n / 2);
+   complexRec(n / 2);
+}
+   void reverseArray(vector <int> arr) {
+       int left = 0, right = arr.size()- 1;
+       while (left < right) {
+           int temp = arr[left];
+           arr[left] = arr[right];
+           arr[right] = temp;
+           left++;
+           right--;
+       }
+   }
+int depth(int n) {
+    if (n <= 2)
+        return 1;    
+    return 1 + depth(n / 2);
+}
+   int main( ) {
+       complexRec(16);
+            auto end = high_resolution_clock::now();
+            auto duration = duration_cast<milliseconds>(end - start);
+            cout<<duration.count()<<endl;
+            cout<<depth(16)<<endl;
+            cout << ops << endl;
+    return 0;         
+   } 
